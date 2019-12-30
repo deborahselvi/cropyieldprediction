@@ -1,0 +1,16 @@
+<!doctype>
+<html>
+    <head>
+        <title>Crop yield prediction</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <div>App for crop yield prediction</div>
+        {% from "_formhelpers.html" import render_field %}
+        <div>State: </div>
+        <form method=post action="/results">
+            <dl>{{render_field(form.CropInfo)}}</dl>
+            <input type=submit value='Predict crop yield' name='submit_btn'>
+        </form>
+    </body>
+</html>
