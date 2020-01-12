@@ -1,0 +1,32 @@
+<!doctype>
+<html>
+    <head>
+        <title>Crop yield prediction</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <div>App for crop yield prediction</div>
+        {% from "_formhelpers.html" import render_field %}
+        <form method=post action="/results">
+            <label for="state">State: </label>
+            <select name="state">
+                <option value="Tamil Nadu">Tamil Nadu</option>
+            </select>
+            <label for="distict">District: </label>
+            <select name="district">
+                <option value="DINDIGUL">DINDIGUL</option>
+            </select>
+            <label for="season">Season: </label>
+            <select name="season">
+                <option value="Kharif">Kharif</option>
+            </select>
+            <label for="crop">Crop: </label>
+            <select name="crop">
+                <option value="Banana">Banana</option>
+            </select>
+            <label for="area">Area: </label>
+            <input name="area"></input>
+            <input type=submit value='Predict crop yield' name='submit_btn'>
+        </form>
+    </body>
+</html>
