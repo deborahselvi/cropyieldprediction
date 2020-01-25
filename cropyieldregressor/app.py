@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
-from wtforms import Form, TextAreaField, validators
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS, cross_origin
+import json
 import os
 import pickle
 import numpy as np
@@ -79,17 +80,31 @@ def index():
     return render_template('crop_yield_app.html', form=form)
 
 @app.route('/results', methods=['POST'])
+@cross_origin()
 def results():
-    form = request.form
+    # form = request.form
     if request.method == 'POST':
-        state = request.form['state']
-        district = request.form['district']
-        season = request.form['season']
-        crop = request.form['crop']
-        area = request.form['area']
+        x = json.loads(request.get_data())
+        print("x --> {}".format(x))
+        state = x['state']
+        district = x['district']
+        season = x['season']
+        crop = x['crop']
+        area = x['area']
         y = predict_yield(state,district,season,crop,area)
-        return render_template('show_resulf.html', prediction=y)
-    return render_template('crop_yield_app.html',form=form)
+        b = y.tolist()
+        for i in b: 
+            print(i)
+            res = {'prediction':i}
+        # state = request.form['state']
+        # district = request.form['district']
+        # season = request.form['season']
+        # crop = request.form['crop']
+        # area = request.form['area']
+        # y = predict_yield(state,district,season,crop,area)
+        return jsonify(res)
+    #     return render_template('show_resulf.html', prediction=y)
+    # return render_template('crop_yield_app.html',form=form)
 
 if __name__ == '__main__':
     app.run()
